@@ -43,11 +43,11 @@ func init() {
 	fmt.Println("Collection instance created!")
 }
 
-func GetAllTasks(w http.ResponseWriter, r *http.Request) {
+func GetAllTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	payload := getAllTask()
-	json.NewEncoded(w).Encode(payload)
+	json.NewEncoder(w).Encode(payload)
 }
 
 func CreateTask(w http.ResponseWriter, r *http.Request) {
@@ -151,11 +151,23 @@ func undoTask(task string) {
 	id, _ := primitive.ObjectIDFromHex(task)
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"status": false}}
-	result, err := collection.UpdateOne(conext.Background(), filter, update)
+	result, err := collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
-		log.Fata(err)
+		log.Fatal(err)
 	}
 	fmt.Println("modified count: ", result.ModifiedCount)
+}
+
+func deleteOneTask(task string) {
+	fmt.Println(task)
+	id, _ := primitive.ObjectIDFromHex(task)
+	filter := bson.M{"_id": id}
+	d, err := collection.DeleteOne(context.Background(), filter)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Deleted Document", d.DeletedCount)
 }
 
 func deleteAllTask() int64 {
