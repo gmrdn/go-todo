@@ -16,7 +16,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const connectionString = "Connection String"
+const connectionString = "mongodb+srv://admin:<password>@cluster0-1236i.mongodb.net/test?retryWrites=true&w=majority"
 const dbName = "test"
 const collName = "todolist"
 
