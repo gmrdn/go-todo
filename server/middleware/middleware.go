@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"../models"
 	"github.com/gorilla/mux"
@@ -16,7 +17,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const connectionString = "mongodb+srv://admin:<password>@cluster0-1236i.mongodb.net/test?retryWrites=true&w=majority"
+var connectionString = "mongodb+srv://admin:" + os.Getenv("MONGOPWD") + "@cluster0-1236i.mongodb.net/test?retryWrites=true&w=majority"
+
 const dbName = "test"
 const collName = "todolist"
 
